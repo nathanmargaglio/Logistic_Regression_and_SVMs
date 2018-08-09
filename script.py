@@ -1,24 +1,24 @@
 import numpy as np
 from scipy.io import loadmat
 from scipy.optimize import minimize
-
+from random import randrange
 
 def preprocess():
-    """ 
+    """
      Input:
      Although this function doesn't have any input, you are required to load
      the MNIST data set from file 'mnist_all.mat'.
 
      Output:
-     train_data: matrix of training set. Each row of train_data contains 
+     train_data: matrix of training set. Each row of train_data contains
        feature vector of a image
      train_label: vector of label corresponding to each image in the training
        set
-     validation_data: matrix of training set. Each row of validation_data 
+     validation_data: matrix of training set. Each row of validation_data
        contains feature vector of a image
-     validation_label: vector of label corresponding to each image in the 
+     validation_label: vector of label corresponding to each image in the
        training set
-     test_data: matrix of training set. Each row of test_data contains 
+     test_data: matrix of training set. Each row of test_data contains
        feature vector of a image
      test_label: vector of label corresponding to each image in the testing
        set
@@ -87,18 +87,17 @@ def preprocess():
 def sigmoid(z):
     return 1.0 / (1.0 + np.exp(-z))
 
-
 def blrObjFunction(initialWeights, *args):
     """
     blrObjFunction computes 2-class Logistic Regression error function and
     its gradient.
 
     Input:
-        initialWeights: the weight vector (w_k) of size (D + 1) x 1 
+        initialWeights: the weight vector (w_k) of size (D + 1) x 1
         train_data: the data matrix of size N x D
         labeli: the label vector (y_k) of size N x 1 where each entry can be either 0 or 1 representing the label of corresponding feature vector
 
-    Output: 
+    Output:
         error: the scalar value of error function of 2-class logistic regression
         error_grad: the vector of size (D+1) x 1 representing the gradient of
                     error function
@@ -107,40 +106,42 @@ def blrObjFunction(initialWeights, *args):
 
     n_data = train_data.shape[0]
     n_features = train_data.shape[1]
-    error = 0
-    error_grad = np.zeros((n_features + 1, 1))
 
-    ##################
-    # YOUR CODE HERE #
-    ##################
-    # HINT: Do not forget to add the bias term to your input data
+    intercept = np.ones((n_data, 1))
+    x = np.hstack((intercept, train_data))
+    h = sigmoid(np.dot(x, initialWeights)).reshape(n_data, 1)
+    y = labeli
+
+    error = -sum(y * np.log(h) + (1 - y) * np.log(1 - h)) / n_data
+    error_grad = np.dot(x.T, (h - y)).reshape(n_features + 1, ) / n_data
 
     return error, error_grad
 
 
 def blrPredict(W, data):
     """
-     blrObjFunction predicts the label of data given the data and parameter W 
+     blrObjFunction predicts the label of data given the data and parameter W
      of Logistic Regression
-     
+
      Input:
-         W: the matrix of weight of size (D + 1) x 10. Each column is the weight 
+         W: the matrix of weight of size (D + 1) x 10. Each column is the weight
          vector of a Logistic Regression classifier.
          X: the data matrix of size N x D
-         
-     Output: 
-         label: vector of size N x 1 representing the predicted label of 
+
+     Output:
+         label: vector of size N x 1 representing the predicted label of
          corresponding feature vector given in data matrix
 
     """
-    label = np.zeros((data.shape[0], 1))
 
-    ##################
-    # YOUR CODE HERE #
-    ##################
-    # HINT: Do not forget to add the bias term to your input data
+    n_data = data.shape[0]
 
-    return label
+    intercept = np.ones((n_data, 1))
+    x = np.hstack((intercept, data))
+
+    label = sigmoid(np.dot(x, W))
+
+    return np.argmax(label, axis=1)
 
 
 def mlrObjFunction(params, *args):
@@ -219,23 +220,29 @@ for i in range(n_class):
 W = np.zeros((n_feature + 1, n_class))
 initialWeights = np.zeros((n_feature + 1, 1))
 opts = {'maxiter': 100}
+rand_index = np.random.choice(np.arange(len(train_data)), 10000, replace=False)
 for i in range(n_class):
+    print(i)
     labeli = Y[:, i].reshape(n_train, 1)
-    args = (train_data, labeli)
+    ## TO LIMIT MEMORY US
+    _train_data = train_data[rand_index]
+    labeli = labeli[rand_index]
+    args = (_train_data, labeli)
     nn_params = minimize(blrObjFunction, initialWeights, jac=True, args=args, method='CG', options=opts)
     W[:, i] = nn_params.x.reshape((n_feature + 1,))
 
 # Find the accuracy on Training Dataset
 predicted_label = blrPredict(W, train_data)
-print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label).astype(float))) + '%')
+print(predicted_label[:100])
+print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = blrPredict(W, validation_data)
-print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label).astype(float))) + '%')
+print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = blrPredict(W, test_data)
-print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label).astype(float))) + '%')
+print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label))) + '%')
 
 """
 Script for Support Vector Machine
