@@ -3,23 +3,41 @@ from scipy.io import loadmat
 from scipy.optimize import minimize
 from random import randrange
 from sklearn.svm import SVC
+import logging
+import time
+
+# set up logging to file - see previous section for more details
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename='log_' + str(int(time.time())) + '.txt',
+                    filemode='w')
+# define a Handler which writes INFO messages or higher to the sys.stderr
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+# set a format which is simpler for console use
+formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+# tell the handler to use this format
+console.setFormatter(formatter)
+# add the handler to the root logger
+logging.getLogger('').addHandler(console)
 
 def preprocess():
-    """ 
+    """
      Input:
      Although this function doesn't have any input, you are required to load
      the MNIST data set from file 'mnist_all.mat'.
 
      Output:
-     train_data: matrix of training set. Each row of train_data contains 
+     train_data: matrix of training set. Each row of train_data contains
        feature vector of a image
      train_label: vector of label corresponding to each image in the training
        set
-     validation_data: matrix of training set. Each row of validation_data 
+     validation_data: matrix of training set. Each row of validation_data
        contains feature vector of a image
-     validation_label: vector of label corresponding to each image in the 
+     validation_label: vector of label corresponding to each image in the
        training set
-     test_data: matrix of training set. Each row of test_data contains 
+     test_data: matrix of training set. Each row of test_data contains
        feature vector of a image
      test_label: vector of label corresponding to each image in the testing
        set
@@ -221,101 +239,102 @@ for i in range(n_class):
 W = np.zeros((n_feature + 1, n_class))
 initialWeights = np.zeros((n_feature + 1, 1))
 opts = {'maxiter': 100}
+logging.info('Starting Logistic Regression')
 for i in range(n_class):
-    print(i)
+    logging.info('Class:' + str(i))
     labeli = Y[:, i].reshape(n_train, 1)
     args = (train_data, labeli)
     nn_params = minimize(blrObjFunction, initialWeights, jac=True, args=args, method='CG', options=opts)
     W[:, i] = nn_params.x.reshape((n_feature + 1,))
-    
+
 # notice the use of flatten()
 
 predicted_label = blrPredict(W, train_data)
-print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = blrPredict(W, validation_data)
-print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = blrPredict(W, test_data)
-print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
 
 """
 Script for Support Vector Machine
 """
 
-print('\n\n--------------SVM-------------------\n\n')
+logging.info('\n\n--------------SVM-------------------\n\n')
 
-print("Linear")
+logging.info("\nLinear")
 clf = SVC(kernel='linear')
 clf.fit(train_data, train_label)
 
 predicted_label = clf.predict(train_data)
-print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = clf.predict(validation_data)
-print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = clf.predict(test_data)
-print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
 
 
-print("Radial; Gamma: 1")
+logging.info("\nRadial; Gamma: 1")
 clf = SVC(kernel='rbf', gamma=1)
 clf.fit(train_data, train_label)
 
 predicted_label = clf.predict(train_data)
-print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = clf.predict(validation_data)
-print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = clf.predict(test_data)
-print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
 
 
-print("Radial; Gamma: Default")
+logging.info("\nRadial; Gamma: Default")
 clf = SVC(kernel='rbf')
 clf.fit(train_data, train_label)
 
 predicted_label = clf.predict(train_data)
-print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = clf.predict(validation_data)
-print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = clf.predict(test_data)
-print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
 
 
 preds = {}
 
 for C in [1] + list(np.arange(10, 110, 10)):
-    print("Radial; C:", C)
+    logging.info("\nRadial; C:", C)
     clf = SVC(C=C)
     clf.fit(train_data, train_label)
-    
+
     preds[C] = {}
 
     predicted_label = clf.predict(train_data)
-    print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+    logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
     preds[C]['train'] = 100 * np.mean((predicted_label == train_label.flatten()))
 
     # Find the accuracy on Validation Dataset
     predicted_label = clf.predict(validation_data)
-    print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+    logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
     preds[C]['validation'] = 100 * np.mean((predicted_label == validation_label.flatten()))
 
     # Find the accuracy on Testing Dataset
     predicted_label = clf.predict(test_data)
-    print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+    logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
     preds[C]['testing'] = 100 * np.mean((predicted_label == test_label.flatten()))
 
 
@@ -333,12 +352,12 @@ W_b = nn_params.x.reshape((n_feature + 1, n_class))
 
 # Find the accuracy on Training Dataset
 predicted_label_b = mlrPredict(W_b, train_data)
-print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label_b == train_label).astype(float))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label_b == train_label).astype(float))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label_b = mlrPredict(W_b, validation_data)
-print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label_b == validation_label).astype(float))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label_b == validation_label).astype(float))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label_b = mlrPredict(W_b, test_data)
-print('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label_b == test_label).astype(float))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label_b == test_label).astype(float))) + '%')
