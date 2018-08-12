@@ -1,0 +1,118 @@
+08-11 10:57 root         INFO     Starting Logistic Regression
+08-11 10:57 root         INFO     Class:0
+08-11 10:58 root         INFO     Class:1
+08-11 10:59 root         INFO     Class:2
+08-11 11:01 root         INFO     Class:3
+08-11 11:02 root         INFO     Class:4
+08-11 11:03 root         INFO     Class:5
+08-11 11:04 root         INFO     Class:6
+08-11 11:05 root         INFO     Class:7
+08-11 11:06 root         INFO     Class:8
+08-11 11:07 root         INFO     Class:9
+08-11 11:08 root         INFO     
+ Training set Accuracy:92.72399999999999%
+08-11 11:08 root         INFO     
+ Validation set Accuracy:91.46%
+08-11 11:08 root         INFO     
+ Testing set Accuracy:92.0%
+08-11 11:08 root         INFO     
+
+--------------SVM-------------------
+
+
+08-11 11:08 root         INFO     
+Linear
+08-11 11:18 root         INFO     
+ Training set Accuracy:97.286%
+08-11 11:19 root         INFO     
+ Validation set Accuracy:93.64%
+08-11 11:20 root         INFO     
+ Testing set Accuracy:93.78%
+08-11 11:20 root         INFO     
+Radial; Gamma: 1
+08-11 14:26 root         INFO     
+ Training set Accuracy:100.0%
+08-11 14:33 root         INFO     
+ Validation set Accuracy:15.479999999999999%
+08-11 14:40 root         INFO     
+ Testing set Accuracy:17.14%
+08-11 14:40 root         INFO     
+Radial; Gamma: Default
+08-11 14:58 root         INFO     
+ Training set Accuracy:94.294%
+08-11 15:00 root         INFO     
+ Validation set Accuracy:94.02000000000001%
+08-11 15:02 root         INFO     
+ Testing set Accuracy:94.42%
+08-11 15:20 root         INFO     
+ Training set Accuracy:94.294%
+08-11 15:22 root         INFO     
+ Validation set Accuracy:94.02000000000001%
+08-11 15:25 root         INFO     
+ Testing set Accuracy:94.42%
+08-11 15:35 root         INFO     
+ Training set Accuracy:97.13199999999999%
+08-11 15:37 root         INFO     
+ Validation set Accuracy:96.17999999999999%
+08-11 15:38 root         INFO     
+ Testing set Accuracy:96.1%
+08-11 15:48 root         INFO     
+ Training set Accuracy:97.952%
+08-11 15:49 root         INFO     
+ Validation set Accuracy:96.89999999999999%
+08-11 15:50 root         INFO     
+ Testing set Accuracy:96.67%
+08-11 15:59 root         INFO     
+ Training set Accuracy:98.372%
+08-11 16:00 root         INFO     
+ Validation set Accuracy:97.1%
+08-11 16:02 root         INFO     
+ Testing set Accuracy:97.04%
+08-11 16:11 root         INFO     
+ Training set Accuracy:98.706%
+08-11 16:12 root         INFO     
+ Validation set Accuracy:97.23%
+08-11 16:13 root         INFO     
+ Testing set Accuracy:97.19%
+08-11 16:22 root         INFO     
+ Training set Accuracy:99.002%
+08-11 16:23 root         INFO     
+ Validation set Accuracy:97.31%
+08-11 16:24 root         INFO     
+ Testing set Accuracy:97.19%
+08-11 16:33 root         INFO     
+ Training set Accuracy:99.196%
+08-11 16:34 root         INFO     
+ Validation set Accuracy:97.38%
+08-11 16:35 root         INFO     
+ Testing set Accuracy:97.16%
+08-11 16:44 root         INFO     
+ Training set Accuracy:99.33999999999999%
+08-11 16:45 root         INFO     
+ Validation set Accuracy:97.36%
+08-11 16:46 root         INFO     
+ Testing set Accuracy:97.26%
+08-11 16:55 root         INFO     
+ Training set Accuracy:99.438%
+08-11 16:56 root         INFO     
+ Validation set Accuracy:97.39%
+08-11 16:57 root         INFO     
+ Testing set Accuracy:97.33000000000001%
+08-11 17:06 root         INFO     
+ Training set Accuracy:99.542%
+08-11 17:07 root         INFO     
+ Validation set Accuracy:97.36%
+08-11 17:08 root         INFO     
+ Testing set Accuracy:97.34%
+08-11 17:17 root         INFO     
+ Training set Accuracy:99.612%
+08-11 17:18 root         INFO     
+ Validation set Accuracy:97.41%
+08-11 17:19 root         INFO     
+ Testing set Accuracy:97.39999999999999%
+08-11 17:19 root         INFO     
+ Training set Accuracy:9.846%
+08-11 17:19 root         INFO     
+ Validation set Accuracy:10.0%
+08-11 17:19 root         INFO     
+ Testing set Accuracy:9.8%
