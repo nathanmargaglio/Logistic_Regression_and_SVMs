@@ -163,7 +163,12 @@ def blrPredict(W, data):
     return np.argmax(label, axis=1)
 
 
-def mlrObjFunction(params, *args):
+def softmax(y_linear):
+    exp = np.exp(y_linear-np.max(y_linear, axis=1).reshape((-1,1)))
+    norms = np.sum(exp, axis=1).reshape((-1,1))
+    return exp / norms
+
+def mlrObjFunction(initialWeights, *args):
     """
     mlrObjFunction computes multi-class Logistic Regression error function and
     its gradient.
@@ -179,15 +184,18 @@ def mlrObjFunction(params, *args):
         error_grad: the vector of size (D+1) x 10 representing the gradient of
                     error function
     """
-    n_data = train_data.shape[0]
-    n_feature = train_data.shape[1]
-    error = 0
-    error_grad = np.zeros((n_feature + 1, n_class))
+    train_data, Y = args
 
-    ##################
-    # YOUR CODE HERE #
-    ##################
-    # HINT: Do not forget to add the bias term to your input data
+    n_data = train_data.shape[0]
+    n_features = train_data.shape[1]
+
+    intercept = np.ones((n_data, 1))
+    x = np.hstack((intercept, train_data))
+    h = softmax(np.dot(x, initialWeights.reshape(n_features + 1, 10))).reshape(n_data, 10)
+    y = Y
+    
+    error = -sum(sum(y * np.log(h))) / n_data
+    error_grad = np.dot(x.T, (h - y)).reshape((n_features + 1)*10, ) / n_data
 
     return error, error_grad
 
@@ -207,14 +215,14 @@ def mlrPredict(W, data):
          corresponding feature vector given in data matrix
 
     """
-    label = np.zeros((data.shape[0], 1))
+    n_data = data.shape[0]
 
-    ##################
-    # YOUR CODE HERE #
-    ##################
-    # HINT: Do not forget to add the bias term to your input data
+    intercept = np.ones((n_data, 1))
+    x = np.hstack((intercept, data))
 
-    return label
+    label = sigmoid(np.dot(x, W))
+
+    return np.argmax(label, axis=1)
 
 
 """
@@ -352,12 +360,12 @@ W_b = nn_params.x.reshape((n_feature + 1, n_class))
 
 # Find the accuracy on Training Dataset
 predicted_label_b = mlrPredict(W_b, train_data)
-logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label_b == train_label).astype(float))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label_b == train_label.flatten()).astype(float))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label_b = mlrPredict(W_b, validation_data)
-logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label_b == validation_label).astype(float))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label_b == validation_label.flatten()).astype(float))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label_b = mlrPredict(W_b, test_data)
-logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label_b == test_label).astype(float))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label_b == test_label.flatten()).astype(float))) + '%')

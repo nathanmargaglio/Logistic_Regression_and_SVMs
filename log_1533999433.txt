@@ -111,8 +111,8 @@ Radial; Gamma: Default
 08-11 17:19 root         INFO     
  Testing set Accuracy:97.39999999999999%
 08-11 17:19 root         INFO     
- Training set Accuracy:9.846%
+ Training set Accuracy:93.448%
 08-11 17:19 root         INFO     
- Validation set Accuracy:10.0%
+ Validation set Accuracy:92.47999999999999%
 08-11 17:19 root         INFO     
- Testing set Accuracy:9.8%
+ Testing set Accuracy:92.55%
