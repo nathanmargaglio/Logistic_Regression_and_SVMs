@@ -193,9 +193,9 @@ def mlrObjFunction(initialWeights, *args):
     x = np.hstack((intercept, train_data))
     h = softmax(np.dot(x, initialWeights.reshape(n_features + 1, 10))).reshape(n_data, 10)
     y = Y
-    
-    error = -sum(sum(y * np.log(h))) / n_data
-    error_grad = np.dot(x.T, (h - y)).reshape((n_features + 1)*10, ) / n_data
+
+    error = -sum(sum(y * np.log(h)))
+    error_grad = np.dot(x.T, (h - y)).reshape((n_features + 1)*10, )
 
     return error, error_grad
 
@@ -256,6 +256,9 @@ for i in range(n_class):
     W[:, i] = nn_params.x.reshape((n_feature + 1,))
 
 # notice the use of flatten()
+
+# dump to pickle
+W.dump('params.pickle')
 
 predicted_label = blrPredict(W, train_data)
 logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
