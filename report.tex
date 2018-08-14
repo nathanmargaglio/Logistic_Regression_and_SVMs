@@ -287,15 +287,13 @@
 
     \section{Logistic Regression}\label{problem-1}
 
-\subsection{Logistic Regression}\label{experiment-with-gaussian-descriminators}
+\subsection{Binary Logistic Regression}
 
-
-
-    For the first part of this project, we implement Logistic Regression to classify hand-written digit images into correct corresponding labels.  Similar to the first assignment, we have a dataset consisting of a number of 28x28, black and white images of hand-written digits (from 0 through 9) and it's corresponding label as a number.
+    For the first part of this assignment, we implement Logistic Regression to classify hand-written digit images into correct corresponding labels.  Similar to the first assignment, we have a dataset consisting of a number of 28x28, black and white images of hand-written digits (from 0 through 9) and it's corresponding label as a number.
     
-    The task has us implement a binary classifier, which cannot classify our digits (since there are 10 of them).  In order to accommadate for this, we build 10 classifiers, each of which corresponding to a single digit.  Each classifier attempts to determine if the image at hand is it's corresponding digit or not.  We then assume the classifier with the greatest positive certainty is the correct label (a \emph{one-vs-all} strategy}.
+    The task has us implement a binary classifier, which cannot classify our digits (since there are 10 of them).  In order to accommadate for this, we build 10 classifiers, each of which corresponding to a single digit.  Each classifier attempts to determine if the image at hand is it's corresponding digit or not.  We then assume the classifier with the greatest positive certainty is the correct label (a \emph{one-vs-all} strategy).
     
-    In order to accomplish this task, we write the functions \emph{blrObjFunction()} and \emph{blrPredict()}, which performs the training and predicting, respectfully.  The following are the results of training the classifiers and testing their accuracy on the training, validation, and testing data sets.
+    In order to accomplish this task, we write the functions \emph{blrObjFunction()} and \emph{blrPredict()}, which performs the training and predicting, respectfully.  The following are the results of training the classifiers and testing their accuracy (percentage of correct classifications) on the training, validation, and testing data sets.
 
     \begin{Verbatim}[commandchars=\\\{\},fontsize=\footnotesize]
 Training Set Accuracy   = 92.72%
@@ -303,164 +301,78 @@ Validation Set Accuracy = 91.46%
 Testing Set Accuracy    = 92.00%
     \end{Verbatim}
 
-    We see the results are relatively good (compared to the same accuracies from the first project's neural network).  The fact that the training set accuracy is fairly close to the validation set accuracy and the testing set accuracy indicates that overfitting is not a problem for this strategy, and implementing a binary logistic classifier fairs well for this kind of task.
+    We see that the results are relatively good (compared to the same accuracies from the first project's neural network).  The fact that the training set accuracy is fairly close to the validation set accuracy and the testing set accuracy indicates that overfitting is not a problem for this strategy, and implementing a binary logistic classifier fairs well for this kind of task.
 
 \pagebreak
+
+\subsection{Multi-Class Logistic Regression}
+
+    For the second part of this project, we use the Support Vector Machine tool from \emph{sklearn.svm.SMC} (http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html) to perform classification on our data set.  We experiment with different sets of parameters for the function in order to compare the different accuracies.
+    
+    First, we vary the kernels.  We test the same data sets from the previous section using a linear kernel with all other default parameters, a radial basis with all other default parameters, and a radial basis with value of $\gamma$ set to $1$ and everything else default.
+    
+    The linear kernel took about 10 minutes to train on my machine, while the radial kernels took almost 20 minutes each to train, meaning that, at least in the case, the training time for the linear kernel is twice as fast.  The linear kernel, however, can't produce as complex a model as the radial kernels, meaning that the radial kernels have a better chance of finding a model that better fits the data.  The value of $\gamma$, which, we will test at both $1/[n\_features]$ (the default) and $1$, will provide a trade-off of bias and variance.
+    
+    The results for the tests are as follows:
+
+    \begin{Verbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+Linear Kernel (default parameters):
+Training Set Accuracy   = 97.28%
+Validation Set Accuracy = 93.64%
+Testing Set Accuracy    = 93.78%
+
+Radial Kernel (default parameters):
+Training Set Accuracy   = 94.29%
+Validation Set Accuracy = 94.02%
+Testing Set Accuracy    = 94.42%
+
+Radial Kernel (Gamma = 1):
+Training Set Accuracy   = 100.00%
+Validation Set Accuracy = 15.48%
+Testing Set Accuracy    = 17.14%
+    \end{Verbatim}
+
+    The results show that, among the three variations, the radial kernel with default paramters perform the best with the validation and testing sets.  Both the linear kernel and the radial with default kernel performed better than the binary logistic classifier on every set.  The radial kernel with $\gamma=1$ had a training set accuracy of 100\%, highest of all the models and indicating extreme overfitting.  It's validation accuracy being 15.48\% and it's testing accuracy being 17.14\% verify this claim.
+    
+    Next, we test the accuracy of a SVM with a radial kernel while varying the $C$ parameter.  We perform the same tests as above while varying $C$ through the values $1, 10, 20, 30, ..., 100]$ for 11 tests of each set (33 total).  The value of $C$ will determine how stable the model is by adjusting the margin for close examples.  A low $C$ means a narrow margin and less error, but at the cost of stability versus a higher $C$.  
+    
+    Below are the plots for the accuracies of the tests:
 
     \begin{center}
     \adjustimage{max size={1.0\linewidth}{1.0\paperheight}}{fig1.png}
     \end{center}
-    { \hspace*{\fill} \\}
-
-We see that the accuracy of LDA is 97\% (97/100 correctly classified)
-and QDA is 96\% (96/100 correctly classified). The plots show the
-example points (with each point being a different color based on
-classification and each boundary's area being a different color based on
-the same scheme).
-
-Notice the difference in the shape of the boundaries. For LDA, we see
-the shape is more linear, while for QDA the shape is more quadratic.
-This is because our use of each class' covariance matrix allows for more
-degrees of freedom through more trained variables, making the QDA's
-boundaries fit more closely with the data (despite this actually leading
-to less accuracy in this example).
-
-    \section{Problem 2}\label{problem-2}
-
-\subsection{Experiment with Linear
-Regression}\label{experiment-with-linear-regression}
-
-
-    For problem 2, we implement \emph{ordinary least squares method} to
-estimate regression parameters by minimizing the squared loss. We note
-the MSE is \textbf{106775.36155730896} when not using an intercept and
-\textbf{3707.8401815996954} when using an intercept (a gain in accuracy
-of about \textbf{103067}).
-
+    
+   
+	We immedietly see that a higher $C$ performs better in this situation, with the highest accuracies at $C=100$.  The accuracy seems to be logarithmic, indicating that increasing $C$ beyond this value wouldn't lead to much more increases in accuracy.  When $C=100$, the results are
+	
     \begin{Verbatim}[commandchars=\\\{\},fontsize=\footnotesize]
-MSE without intercept 106775.36155730896
-MSE with intercept 3707.8401815996954
-Gain in accuracy: 103067.52137570927
-
+Radial Kernel (default parameters; C = 1):
+Training Set Accuracy   = 99.54%
+Validation Set Accuracy = 97.41%
+Testing Set Accuracy    = 97.40%
     \end{Verbatim}
-
-This increase in accuracy can be attributed to the fact that adding the
-intercept allows for the regression to fit the data more closely by
-adding another dimension of freedom for the resulting hyperplane to be
-translated over.
-
-    \section{Problem 3}\label{problem-3}
-
-\subsection{Experiment with Ridge
-Regression}\label{experiment-with-ridge-regression}
-
-    For this problem, we implement \emph{Ridge Regression}, similar to
-linear regression like before, but with \emph{L2 regularization}. This
-regularization penalizes complexity by adding a term to the error
-equivalent to the squared sum of the weights multiplied by some constant
-\(\lambda\).
-
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Experimentation_files/Experimentation_16_0.png}
-    \end{center}
-    { \hspace*{\fill} \\}
     
+	We see that this model performed significantly better than the other models we trained in the previous sections.  These values indicate that, for our dataset, a support vector machine with a radial kernel, $\gamma=1/[n\_features]$, and $C = 100$ is the best choice among the models we have tested.
+	
+\pagebreak
 
-    \begin{Verbatim}[commandchars=\\\{\},fontsize=\footnotesize]
-MSE with intercept 2851.3302134438477
-Magnitudes of Ridge Weights: 5240.0949268758395
-Magnitudes without Ridge: 286570.97996703925
+\subsection{Multi-Class Logistic Regression}
 
+	For the third part of this project, we implement multi-class logistic regression to classify the handwritten digit dataset from the previous sections.  We extend the binary classifier from the first section to instead classify an example over 10 classes (one for each possible digit), versus the binary classifer which was a set of 10 classifiers each determining whether a digit is "their" digit or not.
+	We implement the code in a similar fashion to the first section, except now we use a \emph{softmax} activation function instead of the \emph{sigmoid} activation.  This gives us the correct posterior probabilities over the 10 classes.  We use the cross-entropy error function so that we optimize on correct classifications versus output values.
+	The results are as follows:
+	
+	\begin{Verbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+Training Set Accuracy   = 93.45%
+Validation Set Accuracy = 92.48%
+Testing Set Accuracy    = 92.55%
     \end{Verbatim}
+	
+	So, our multi-class logisitc regression model performs better than the linear regression model, but not as well as the support vector machine.
+	
+\subsection{Results}
 
-In our implementation, we vary \(\lambda\) through 100 equally spaced
-values between 0 and 1 and use this value to train and test the
-regression. In doing so, we found that the \(\lambda\) that produces the
-highest accuracy in the test data is \emph{0.06}. This value provides
-optimal accuracy in that it limits the complexity of the regression
-(i.e., keeping the weights lower than without it), so as to prevent
-overfitting.
-
-When comparing the magnitudes of the weights for regression using and
-not using regularization, we see a drastic change. When not using
-regularization (i.e., the previous problem), we have a magnitude of
-about \textbf{286,570}. When using regularization, the magnitude it
-\textbf{5,240}.
-
-    \section{Problem 4}\label{problem-4}
-
-\subsection{Using Gradient Descent for Ridge Regression
-Learning}\label{using-gradient-descent-for-ridge-regression-learning}
-
-    For this problem, we re-implement Ridge Regression, but this time by
-utilizing \emph{Gradient Descent}. The reason we'd use this method over
-directly computing the regression is that the closed-form solution of
-ordinary least squares regression involves taking an inverse of a matrix,
-which may not be suitable in a numerical setting. Gradient Descent helps
-us avoid this issue (at the cost of training time and volatility in
-training).
-
-
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Experimentation_files/Experimentation_21_0.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-We see in the plots that Gradient Descent is more erratic in terms of
-error for every \(\lambda\) we use in learning. This is due to the
-nature of Gradient Descent and the uncertainty (and sometime inability)
-of the algorithm to properly find a global minimia.
-
-Despite this, Gradient Descent performs well relative to the closed form
-solution, with higher values of \(\lambda\) producing more closely
-aligned errors.
-
-    \section{Problem 5}\label{problem-5}
-
-\subsection{Non-linear Regression}\label{non-linear-regression}
-
-    For problem 5, we investigate the impact of using higher order
-polynomials for the input features. This converts a single attribute
-\textbf{x} into a vector of \emph{p} attributes, \emph{1, x, \(x^2\),
-..., \(x^p\)}. For this problem, we only use the third variable as the
-input variable.
-
-We plot the MSE for both no regularization (\(\lambda = 0\)) and
-regularization using our optimal value from problem 3
-(\(\lambda = 0.06\)) as we vary \emph{p} from 0 to 6.
-
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Experimentation_files/Experimentation_25_0.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-
-We find that the optimal range of values for \emph{p} for the test data
-is from 1 to 3, with \emph{p=1} providing the best accuracy. We note
-that, as \emph{p} increases past 3, the training error decreases but the
-testing error increases dramitically. This can be attributed to
-overfitting, as the higher degree polynomials can better fit the
-training data.
-
-    \section{Problem 6}\label{problem-6}
-
-\subsection{Interpreting Results}\label{interpreting-results}
-
-    Based on the previous results, it would seem using Ridge Regression is
-the best approach in terms of training and testing error for anyone
-using regression for predicting diabetes levels using the input
-features. In application, it would probably be best to use Gradient
-Descent in order to avoid computational issues with the closed-form
-version. Using non-linear regression might provide higher accuracy (at
-least in terms of training error), but can lead to overfitting quickly,
-even with regularization.
-
-Anyone using regression will want to use the MSE of their testing set to
-choose the best setting. This will prevent them from selecting an
-approach that is prone to overfitting or isn't accurate.
-
-
-    % Add a bibliography block to the postdoc
+	Through the experimentation of these various classifiers, we've found, for the task of classifying images of handwritten digits, that a Support Vector Machine with a radial kernel and parameters $\gamma=1/[n\_features]$ and $C=100$ performs the best in terms of accuracy.  Although different data sets will require different models for the best performance, we can argue that using Support Vector Machines with similar parameters may be a good place to start when finding a classifier for a similar task.
     
     
     
