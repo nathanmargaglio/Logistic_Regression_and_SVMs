@@ -159,8 +159,9 @@ def blrPredict(W, data):
     x = np.hstack((intercept, data))
 
     label = sigmoid(np.dot(x, W))
+    _label = np.argmax(label, axis=1)
 
-    return np.argmax(label, axis=1)
+    return _label.reshape((_label.shape[0],1))
 
 
 def softmax(y_linear):
@@ -220,9 +221,7 @@ def mlrPredict(W, data):
     intercept = np.ones((n_data, 1))
     x = np.hstack((intercept, data))
 
-    label = sigmoid(np.dot(x, W))
-
-    return np.argmax(label, axis=1)
+    return _label.reshape((_label.shape[0],1))
 
 
 """
@@ -255,21 +254,19 @@ for i in range(n_class):
     nn_params = minimize(blrObjFunction, initialWeights, jac=True, args=args, method='CG', options=opts)
     W[:, i] = nn_params.x.reshape((n_feature + 1,))
 
-# notice the use of flatten()
-
 # dump to pickle
 W.dump('params.pickle')
 
 predicted_label = blrPredict(W, train_data)
-logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = blrPredict(W, validation_data)
-logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = blrPredict(W, test_data)
-logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label))) + '%')
 
 """
 Script for Support Vector Machine
@@ -282,15 +279,15 @@ clf = SVC(kernel='linear')
 clf.fit(train_data, train_label)
 
 predicted_label = clf.predict(train_data)
-logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = clf.predict(validation_data)
-logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = clf.predict(test_data)
-logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label))) + '%')
 
 
 logging.info("\nRadial; Gamma: 1")
@@ -298,15 +295,15 @@ clf = SVC(kernel='rbf', gamma=1)
 clf.fit(train_data, train_label)
 
 predicted_label = clf.predict(train_data)
-logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = clf.predict(validation_data)
-logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = clf.predict(test_data)
-logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label))) + '%')
 
 
 logging.info("\nRadial; Gamma: Default")
@@ -314,15 +311,15 @@ clf = SVC(kernel='rbf')
 clf.fit(train_data, train_label)
 
 predicted_label = clf.predict(train_data)
-logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label = clf.predict(validation_data)
-logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label = clf.predict(test_data)
-logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label))) + '%')
 
 
 preds = {}
@@ -335,18 +332,18 @@ for C in [1] + list(np.arange(10, 110, 10)):
     preds[C] = {}
 
     predicted_label = clf.predict(train_data)
-    logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label.flatten()))) + '%')
-    preds[C]['train'] = 100 * np.mean((predicted_label == train_label.flatten()))
+    logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label))) + '%')
+    preds[C]['train'] = 100 * np.mean((predicted_label == train_label))
 
     # Find the accuracy on Validation Dataset
     predicted_label = clf.predict(validation_data)
-    logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label.flatten()))) + '%')
-    preds[C]['validation'] = 100 * np.mean((predicted_label == validation_label.flatten()))
+    logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label))) + '%')
+    preds[C]['validation'] = 100 * np.mean((predicted_label == validation_label))
 
     # Find the accuracy on Testing Dataset
     predicted_label = clf.predict(test_data)
-    logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label.flatten()))) + '%')
-    preds[C]['testing'] = 100 * np.mean((predicted_label == test_label.flatten()))
+    logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label == test_label))) + '%')
+    preds[C]['testing'] = 100 * np.mean((predicted_label == test_label))
 
 
 """
@@ -363,12 +360,12 @@ W_b = nn_params.x.reshape((n_feature + 1, n_class))
 
 # Find the accuracy on Training Dataset
 predicted_label_b = mlrPredict(W_b, train_data)
-logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label_b == train_label.flatten()).astype(float))) + '%')
+logging.info('\n Training set Accuracy:' + str(100 * np.mean((predicted_label_b == train_label).astype(float))) + '%')
 
 # Find the accuracy on Validation Dataset
 predicted_label_b = mlrPredict(W_b, validation_data)
-logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label_b == validation_label.flatten()).astype(float))) + '%')
+logging.info('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label_b == validation_label).astype(float))) + '%')
 
 # Find the accuracy on Testing Dataset
 predicted_label_b = mlrPredict(W_b, test_data)
-logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label_b == test_label.flatten()).astype(float))) + '%')
+logging.info('\n Testing set Accuracy:' + str(100 * np.mean((predicted_label_b == test_label).astype(float))) + '%')
