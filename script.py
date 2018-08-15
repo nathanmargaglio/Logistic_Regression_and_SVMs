@@ -221,6 +221,9 @@ def mlrPredict(W, data):
     intercept = np.ones((n_data, 1))
     x = np.hstack((intercept, data))
 
+    label = sigmoid(np.dot(x, W))
+    _label = np.argmax(label, axis=1)
+
     return _label.reshape((_label.shape[0],1))
 
 
