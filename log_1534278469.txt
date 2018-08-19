@@ -1,0 +1,32 @@
+08-14 16:27 root         INFO     Starting Logistic Regression
+08-14 16:27 root         INFO     Class:0
+08-14 16:29 root         INFO     Class:1
+08-14 16:30 root         INFO     Class:2
+08-14 16:31 root         INFO     Class:3
+08-14 16:32 root         INFO     Class:4
+08-14 16:33 root         INFO     Class:5
+08-14 16:34 root         INFO     Class:6
+08-14 16:36 root         INFO     Class:7
+08-14 16:37 root         INFO     Class:8
+08-14 16:38 root         INFO     Class:9
+08-14 16:39 root         INFO     
+ Training set Accuracy:92.72399999999999%
+08-14 16:39 root         INFO     
+ Validation set Accuracy:91.46%
+08-14 16:39 root         INFO     
+ Testing set Accuracy:92.0%
+08-14 16:39 root         INFO     
+
+--------------SVM-------------------
+
+
+08-14 16:39 root         INFO     
+Linear
+08-14 16:48 root         INFO     
+ Training set Accuracy:10.044024440000001%
+08-14 16:50 root         INFO     
+ Validation set Accuracy:10.0%
+08-14 16:51 root         INFO     
+ Testing set Accuracy:10.03978%
+08-14 16:51 root         INFO     
+Radial; Gamma: 1

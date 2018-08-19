@@ -1,0 +1,112 @@
+08-14 19:22 root         INFO     Starting Logistic Regression
+08-14 19:22 root         INFO     Class:0
+08-14 19:23 root         INFO     Class:1
+08-14 19:24 root         INFO     Class:2
+08-14 19:25 root         INFO     Class:3
+08-14 19:27 root         INFO     Class:4
+08-14 19:28 root         INFO     Class:5
+08-14 19:29 root         INFO     Class:6
+08-14 19:30 root         INFO     Class:7
+08-14 19:31 root         INFO     Class:8
+08-14 19:32 root         INFO     Class:9
+08-14 19:33 root         INFO     
+ Training set Accuracy:92.72399999999999%
+08-14 19:33 root         INFO     
+ Validation set Accuracy:91.46%
+08-14 19:33 root         INFO     
+ Testing set Accuracy:92.0%
+08-14 19:33 root         INFO     
+
+--------------SVM-------------------
+
+
+08-14 19:33 root         INFO     
+Linear
+08-14 19:43 root         INFO     
+ Training set Accuracy:10.044024440000001%
+08-14 19:44 root         INFO     
+ Validation set Accuracy:10.0%
+08-14 19:45 root         INFO     
+ Testing set Accuracy:10.03978%
+08-14 19:45 root         INFO     
+Radial; Gamma: 1
+08-14 22:51 root         INFO     
+ Training set Accuracy:10.04149496%
+08-14 22:58 root         INFO     
+ Validation set Accuracy:10.0%
+08-14 23:05 root         INFO     
+ Testing set Accuracy:10.353402%
+08-14 23:05 root         INFO     
+Radial; Gamma: Default
+08-14 23:23 root         INFO     
+ Training set Accuracy:10.0435446%
+08-14 23:25 root         INFO     
+ Validation set Accuracy:10.0%
+08-14 23:27 root         INFO     
+ Testing set Accuracy:10.037857%
+08-14 23:45 root         INFO     
+ Training set Accuracy:10.0435446%
+08-14 23:48 root         INFO     
+ Validation set Accuracy:10.0%
+08-14 23:50 root         INFO     
+ Testing set Accuracy:10.037857%
+08-15 00:00 root         INFO     
+ Training set Accuracy:10.04334708%
+08-15 00:02 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 00:03 root         INFO     
+ Testing set Accuracy:10.037836%
+08-15 00:13 root         INFO     
+ Training set Accuracy:10.04274964%
+08-15 00:14 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 00:15 root         INFO     
+ Testing set Accuracy:10.037765%
+08-15 00:25 root         INFO     
+ Training set Accuracy:10.04270164%
+08-15 00:26 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 00:27 root         INFO     
+ Testing set Accuracy:10.037195%
+08-15 00:36 root         INFO     
+ Training set Accuracy:10.042133960000001%
+08-15 00:37 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 00:39 root         INFO     
+ Testing set Accuracy:10.037306%
+08-15 00:48 root         INFO     
+ Training set Accuracy:10.041861840000001%
+08-15 00:49 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 00:50 root         INFO     
+ Testing set Accuracy:10.037617000000001%
+08-15 00:59 root         INFO     
+ Training set Accuracy:10.04188324%
+08-15 01:00 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 01:01 root         INFO     
+ Testing set Accuracy:10.037066%
+08-15 01:10 root         INFO     
+ Training set Accuracy:10.04190472%
+08-15 01:11 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 01:12 root         INFO     
+ Testing set Accuracy:10.036401999999999%
+08-15 01:21 root         INFO     
+ Training set Accuracy:10.04170352%
+08-15 01:22 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 01:24 root         INFO     
+ Testing set Accuracy:10.036552%
+08-15 01:32 root         INFO     
+ Training set Accuracy:10.04178216%
+08-15 01:34 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 01:35 root         INFO     
+ Testing set Accuracy:10.036438%
+08-15 01:44 root         INFO     
+ Training set Accuracy:10.04170604%
+08-15 01:45 root         INFO     
+ Validation set Accuracy:10.0%
+08-15 01:46 root         INFO     
+ Testing set Accuracy:10.036487%
